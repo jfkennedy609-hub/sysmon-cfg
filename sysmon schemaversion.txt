@@ -1,0 +1,21 @@
+<Sysmon schemaversion="4.50">
+  <EventFiltering>
+    <!-- Process create (command line) -->
+    <ProcessCreate onmatch="include">
+      <RuleGroup name="ProcessCreate" groupRelation="or">
+        <Image condition="is">C:\Windows\System32\cmd.exe</Image>
+        <Image condition="is">C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</Image>
+        <Image condition="contains">psexec</Image>
+      </RuleGroup>
+    </ProcessCreate>
+
+    <!-- Network connection -->
+    <NetworkConnect onmatch="include">
+      <RuleGroup name="NetworkConnect" groupRelation="or">
+        <DestinationPort condition="is">445</DestinationPort>
+        <DestinationPort condition="is">3389</DestinationPort>
+      </RuleGroup>
+    </NetworkConnect>
+  </EventFiltering>
+</Sysmon>
+
